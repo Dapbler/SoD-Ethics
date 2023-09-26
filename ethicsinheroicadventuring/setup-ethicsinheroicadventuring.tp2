@@ -1,0 +1,32 @@
+BACKUP ~ethicsinheroicadventuring/backup~
+AUTHOR ~Grozzle @ http forums.gibberlings3.net~
+
+BEGIN ~Restore Minsc's original SoD Ethics line~
+DESIGNATED 10
+REQUIRE_PREDICATE GAME_INCLUDES ~sod~ ~Requires Seige of Dragonspear~
+COPY ~ethicsinheroicadventuring/wav/bd68091.wav~ ~override~
+
+COPY_EXISTING ~bdminsc.bcs~ ~override~
+DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~SetPlayerSound(Myself,.*,SELECT_ACTION7)~ ~SetPlayerSound(Myself,-50000,SELECT_ACTION7)~
+    REPLACE ~-50000~ ~Really, it's all about ethics in heroic adventuring.~ [bd68091]
+END
+
+BEGIN ~AI Script to toggle Minsc's original SoD Ethics line~
+DESIGNATED 15
+REQUIRE_COMPONENT setup-ethicsinheroicadventuring.tp2 10 ~Requires voice line addition~
+
+COPY ~ethicsinheroicadventuring/minsceth.baf~ ~override~
+REPLACE ~-50000~ ~Really, it's all about ethics in heroic adventuring.~ [bd68091]
+REPLACE ~-50001~ ~Make way evil! I'm armed to the teeth and packing a hamster!~ [MINSC26]
+
+COMPILE ~override/minsceth.baf~
+DELETE + ~override/minsceth.baf~
+MOVE ~override/minsceth.bcs~ ~scripts/minsceth.bs~
+
+APPEND ~scrpdesc.2DA~
+~minsceth	minsc_ethics_aititle	minsc_ethics_aidesc~
+
+COPY_EXISTING ~scrpdesc.2da~ ~override/scrpdesc.2da~
+REPLACE ~minsc_ethics_aititle~ ~MINSC ETHICS : ~
+REPLACE ~minsc_ethics_aidesc~ ~Use Hotkey S to switch between Minsc Heroic Adventuring and Packing a Hamster lines.~

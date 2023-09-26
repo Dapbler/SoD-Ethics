@@ -1,0 +1,19 @@
+IF
+	Hotkey(S)
+	!Global("MINSC_ETHICS_DIALOGUE","GLOBAL",1)
+THEN
+	RESPONSE #100
+		SetGlobal("MINSC_ETHICS_DIALOGUE","GLOBAL",1)
+		SetPlayerSound("minsc",-50000,SELECT_ACTION7) // Heroic Adventuring
+		DisplayString("minsc",-50000)
+END
+
+IF
+	Hotkey(S)
+	Global("MINSC_ETHICS_DIALOGUE","GLOBAL",1)
+THEN
+	RESPONSE #100
+		SetGlobal("MINSC_ETHICS_DIALOGUE","GLOBAL",0)
+		SetPlayerSound("minsc",-50001,SELECT_ACTION7) // Make way evil!
+		DisplayString("minsc",-50001)
+END
